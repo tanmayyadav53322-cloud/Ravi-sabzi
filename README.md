@@ -10,11 +10,14 @@ Single-shop vegetable store with a private admin panel. Static site (one `index.
 - `archive/claude-artifact-version.html` — older standalone version (no Supabase)
 
 ## Setup
-1. Supabase SQL Editor: run `01_schema.sql`, then `02_restock_and_rate_limit.sql` (already applied to project `stlslwkpsaxqroqobsgj`; skip if so).
-2. Supabase > Authentication > Users > Add user (Ravi's email + password).
-3. Authentication > Sign In / Providers: turn OFF "Allow new users to sign up".
-4. Edit the email in `03_make_admin.sql` and run it.
-5. Deploy this folder to Netlify / Vercel / GitHub Pages. Admin: `https://your-site/#/admin/login`.
+1. Supabase SQL Editor: run `01_schema.sql`, `02_restock_and_rate_limit.sql`, then `04_ravi_self_setup.sql`.
+2. Run the last (commented) line of `04_ravi_self_setup.sql` with a setup code of your own choice. Keep the code private.
+3. Authentication > Sign In / Providers: keep "Allow new users to sign up" ON only until Ravi finishes step 5. Optionally turn OFF "Confirm email" for the first setup.
+4. Deploy this folder to Netlify / Vercel / GitHub Pages.
+5. Ravi opens `https://your-site/#/admin/login`, taps "Pehli baar? Ravi ka profile banayein", enters name, mobile, email, password and the setup code. The code is deleted automatically after use.
+6. Turn "Allow new users to sign up" OFF again. From now on only Ravi's email + password opens the admin panel.
+
+(`03_make_admin.sql` is an alternative: promote an existing user by email, without the setup form.)
 
 ## Security notes
 - Only the publishable key is in `index.html`. Never put the `service_role` key in any file.

@@ -69,7 +69,7 @@ const errMsg=e=>{const m=String(e.message||e),k=Object.keys(ERR).find(x=>m.inclu
 /* ===== router ===== */
 const path=()=>location.hash.slice(1)||'/';
 async function hdr(){const adm=path().startsWith('/admin')&&S.admin;
-if(adm){$('#hd').innerHTML=`<div class="h1"><button class="lg" data-nav>☰ <b>Ravi Admin</b></button><span class="row" style="flex:none"><a class="ic btn" href="#/admin/notifs" style="display:grid;place-items:center">🔔${S.unread?`<i>${S.unread}</i>`:''}</a></span></div><div class="nav" id="nv">${[['dash','🏠 Dashboard'],['orders','📦 Orders'],['products','🥬 Products'],['customers','👥 Customers'],['sales','📊 Sales'],['coupons','🏷 Coupons'],['settings','⚙️ Settings'],['notifs','🔔 Notifications']].map(([a,b])=>`<a href="#/admin/${a}">${b}</a>`).join('')}<a href="#/">🛒 Dukaan dekhein</a><a href="#" data-out>🚪 Logout</a></div>`;return}
+if(adm){$('#hd').innerHTML=`<div class="h1"><button class="lg" data-nav>☰ <b>${esc((S.adm&&S.adm.name)||'Ravi')} · Admin</b></button><span class="row" style="flex:none"><a class="ic btn" href="#/admin/notifs" style="display:grid;place-items:center">🔔${S.unread?`<i>${S.unread}</i>`:''}</a></span></div><div class="nav" id="nv">${[['dash','🏠 Dashboard'],['orders','📦 Orders'],['products','🥬 Products'],['customers','👥 Customers'],['sales','📊 Sales'],['coupons','🏷 Coupons'],['settings','⚙️ Settings'],['notifs','🔔 Notifications']].map(([a,b])=>`<a href="#/admin/${a}">${b}</a>`).join('')}<a href="#/">🛒 Dukaan dekhein</a><a href="#" data-out>🚪 Logout</a></div>`;return}
 const n=Object.keys(S.cart).length;
 $('#hd').innerHTML=`<div class="h1"><a class="lg" href="#/" style="text-decoration:none;color:inherit">🥬 <b>${T('रवि सब्ज़ी भंडार','Ravi Sabzi Bhandar')}</b></a><span class="row" style="flex:none;flex-wrap:nowrap;align-items:center"><span class="sw">${[['hi','हिंदी'],['hl','Hinglish']].map(([l,x])=>`<button data-l="${l}" class="${S.lang===l?'on':''}">${x}</button>`).join('')}</span><a class="ic btn" href="#/cart" style="display:grid;place-items:center">🛒${n?`<i>${n}</i>`:''}</a></span></div>
 <div class="pills"><a class="loc btn" href="#/contact">📍 ${esc(S.set.address||'')}</a><a class="loc btn" href="#/orders">📦 ${T('मेरे ऑर्डर','Mere Orders')}</a></div>`}
@@ -135,16 +135,30 @@ el.innerHTML=`<div class="card"><h3>✅ ${T('ऑर्डर हो गया!',
 /* ===== admin ===== */
 async function guard(p){const el=$('#app');el.innerHTML='';
 const{data:{session}}=await sb.auth.getSession();let ok=false;
-if(session){const r=await sb.from('admins').select('user_id').maybeSingle();ok=!!r.data}
-S.admin=ok;
-if(!ok){if(p!=='/admin/login'){location.hash='#/admin/login';return}$('#hd').innerHTML=`<div class="h1"><a class="lg" href="#/" style="text-decoration:none;color:inherit">🥬 <b>Ravi Sabzi Bhandar</b></a></div>`;login(el,!!session);return}
+if(session){const r=await sb.from('admins').select('user_id,name,phone').maybeSingle();ok=!!r.data;S.adm=r.data||{}}
+S.admin=ok;if(!ok)S.setup=(await sb.rpc('setup_needed')).data===true;
+if(!ok){if(p!=='/admin/login'){location.hash='#/admin/login';return}$('#hd').innerHTML=`<div class="h1"><a class="lg" href="#/" style="text-decoration:none;color:inherit">🥬 <b>Ravi Sabzi Bhandar</b></a></div>`;if(session&&S.setup)setup(el,true);else login(el,!!session);return}
 if(p==='/admin/login'||p==='/admin'){location.hash='#/admin/dash';return}
 const{count}=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('is_read',false);S.unread=count||0;await hdr();
 const V={dash,orders:aOrders,products:aProducts,customers:aCust,sales:aSales,coupons:aCoup,settings:aSet,notifs:aNot};
 await (V[p.split('/')[2]]||dash)(el)}
-function login(el,denied){el.innerHTML=`<div class="card"><h3>🔐 Admin Login</h3>${denied?'<p style="color:var(--red)">Is account ko admin access nahi hai.</p>':''}<label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><label><input type="checkbox" id="sp"> Show password</label><br><label><input type="checkbox" id="rm" checked> Remember me</label><p id="er" style="color:var(--red)"></p><button id="li">Login</button></div>`;
-el.onclick=async e=>{if(e.target.id==='sp')$('#pw').type=e.target.checked?'text':'password';
+function login(el,denied){el.innerHTML=`<div class="card"><h3>🔐 Admin Login</h3>${denied?'<p style="color:var(--red)">Is account ko admin access nahi hai.</p>':''}<label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><label><input type="checkbox" id="sp"> Show password</label><br><label><input type="checkbox" id="rm" checked> Remember me</label><p id="er" style="color:var(--red)"></p><button id="li">Login</button>${S.setup?'<button class="o" id="sup" style="margin-top:8px">🆕 Pehli baar? Ravi ka profile banayein</button>':''}</div>`;
+el.onclick=async e=>{if(e.target.id==='sup')return setup(el,false);if(e.target.id==='sp')$('#pw').type=e.target.checked?'text':'password';
 if(e.target.id==='li'){const{error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(error){$('#er').textContent='Email ya password galat hai';return}localStorage.rem=$('#rm').checked?'1':'0';sessionStorage.alive=1;render()}}}
+
+function setup(el,session){
+el.innerHTML=`<div class="card"><h3>🆕 Ravi ka profile banayein</h3><p class="mut">Pehli baar ka setup. Setup code Supabase mein aapne khud rakha hai.</p><label>Naam</label><input id="sn" value="Ravi"><label>Mobile</label><input id="sm" type="tel" inputmode="numeric" maxlength="10">${session?'':`<label>Email</label><input id="se" type="email" autocomplete="username"><label>Password (kam se kam 8 akshar)</label><input id="s1" type="password" autocomplete="new-password"><label>Password dobara</label><input id="s2" type="password" autocomplete="new-password">`}<label>Setup code</label><input id="sc" style="text-transform:uppercase"><p id="er" style="color:var(--red)"></p><button id="sg">Profile banayein</button><button class="o" id="sw2" style="margin-top:8px">Wapas</button></div>`;
+el.onclick=async e=>{if(e.target.id==='sw2')return render();if(e.target.id!=='sg')return;
+const v=k=>($('#'+k)?$('#'+k).value.trim():''),er=m=>{$('#er').textContent=m};
+if(!v('sn'))return er('Naam bharein');
+if(!session){if(!v('se'))return er('Email bharein');if(v('s1').length<8)return er('Password kam se kam 8 akshar ka rakhein');if(v('s1')!==v('s2'))return er('Dono password same nahi hain')}
+if(!v('sc'))return er('Setup code bharein');
+const b=e.target;b.disabled=true;
+if(!session){const a=await sb.auth.signUp({email:v('se'),password:v('s1')});if(a.error){b.disabled=false;return er(a.error.message)}
+if(!a.data.session){const l=await sb.auth.signInWithPassword({email:v('se'),password:v('s1')});if(l.error){b.disabled=false;return er('Email confirm karein (inbox dekhein), phir login karke yeh form dobara bharein.')}}}
+const{error}=await sb.rpc('claim_admin',{p_code:v('sc'),p_name:v('sn'),p_phone:v('sm')});
+if(error){b.disabled=false;return er(/BAD_CODE/.test(error.message)?'Setup code galat hai':/ALREADY/.test(error.message)?'Admin pehle se bana hua hai':error.message)}
+localStorage.rem='1';sessionStorage.alive=1;toast('Profile ban gaya ✔');location.hash='#/admin/dash';render()}}
 const ist=d=>new Date(d).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 const sod=(d=new Date())=>{const x=new Date(d);x.setHours(0,0,0,0);return x};
 const valid=o=>o.order_status!=='cancelled';
@@ -257,11 +271,13 @@ el.innerHTML=`<h3>Shop & Delivery Settings</h3><div class="card"><div class="ln"
 <div class="card"><b>Shop</b>${I('shop_name','Shop name')}${I('address','Address')}${I('phone','Phone')}${I('whatsapp','WhatsApp (91XXXXXXXXXX)')}${I('email','Email','email')}<div class="row"><div>${I('open_time','Opening time','time')}</div><div>${I('close_time','Closing time','time')}</div></div></div>
 <div class="card"><b>Delivery</b>${I('free_radius_km','Free delivery radius (KM)','number')}${I('free_above','Free delivery above ₹ (0 = off)','number')}${I('delivery_charge','Default delivery charge ₹','number')}${I('min_order','Minimum order ₹','number')}${I('max_km','Max delivery distance (KM)','number')}<label>Distance charges (km:₹, jaise 7:20,10:40)</label><input id="s_tiers" value="${esc((s.tiers||[]).map(t=>t.km+':'+t.fee).join(','))}"></div>
 <div class="card"><b>Homepage banner</b>${I('banner_heading','Heading')}${I('banner_desc','Description')}</div><button id="ss">Save Settings</button>
+<div class="card" style="margin-top:12px"><b>👤 Ravi ka profile</b><label>Naam</label><input id="pn" value="${esc((S.adm&&S.adm.name)||'')}"><label>Mobile</label><input id="pm" value="${esc((S.adm&&S.adm.phone)||'')}"><button class="o" id="psv">Save Profile</button></div>
 <div class="card" style="margin-top:12px"><b>Password badlein</b><input id="np" type="password" placeholder="Naya password (min 8)"><button class="o" id="cp">Change Password</button></div>`;
 const save=async x=>{const{error}=await sb.from('settings').update(x).eq('id',1);if(error)return alert(error.message);toast('Saved ✔')};
 el.onclick=async e=>{if(e.target.id==='so'){await save({is_open:!s.is_open});aSet(el)}
 if(e.target.id==='ss'){const g=k=>$('#s_'+k).value.trim(),n=k=>+g(k)||0,tiers=g('tiers').split(',').map(x=>x.split(':').map(Number)).filter(a=>a.length==2&&a[0]>0&&a[1]>=0).map(([km,fee])=>({km,fee}));
 await save({shop_name:g('shop_name'),address:g('address'),phone:g('phone'),whatsapp:g('whatsapp'),email:g('email')||null,open_time:g('open_time'),close_time:g('close_time'),free_radius_km:n('free_radius_km'),free_above:n('free_above'),delivery_charge:n('delivery_charge'),min_order:n('min_order'),max_km:n('max_km'),tiers,banner_heading:g('banner_heading'),banner_desc:g('banner_desc'),accept_orders_when_closed:$('#s_accept').checked})}
+if(e.target.id==='psv'){const n=$('#pn').value.trim(),m=$('#pm').value.trim(),u=(await sb.auth.getUser()).data.user,{error}=await sb.from('admins').update({name:n||null,phone:m||null}).eq('user_id',u.id);if(error)return alert(error.message);S.adm={...S.adm,name:n,phone:m};hdr();toast('Saved ✔')}
 if(e.target.id==='cp'){const p=$('#np').value;if(p.length<8)return alert('Kam se kam 8 akshar');const{error}=await sb.auth.updateUser({password:p});alert(error?error.message:'Password badal gaya')}}}
 
 async function aNot(el){const{data}=await sb.from('notifications').select('*').order('created_at',{ascending:false}).limit(60);
