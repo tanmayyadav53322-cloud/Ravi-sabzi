@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>रवि सब्ज़ी भंडार</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#fbfaf4;--fg:#1d2b20;--card:#fff;--g:#2f6f3e;--gd:#1f5230;--gl:#eaf3e6;--gold:#d99a1b;--mut:#6b7a6e;--bd:#e8e6da;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a14;--fg:#e8efe9;--card:#1b261e;--gl:#223427;--mut:#9fb0a3;--bd:#2c3b30;--g:#6fbf82}}
+:root[data-theme="dark"]{--bg:#121a14;--fg:#e8efe9;--card:#1b261e;--gl:#223427;--mut:#9fb0a3;--bd:#2c3b30;--g:#6fbf82}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 'Noto Sans Devanagari',system-ui,sans-serif;padding-bottom:90px}
+button,.btn{font:inherit;font-weight:600;border:0;border-radius:14px;padding:12px 14px;background:linear-gradient(135deg,#2f6f3e,#1f5230);color:#fff;text-align:center;text-decoration:none;display:block;cursor:pointer}
+.o{background:transparent!important;color:var(--g)!important;border:1.5px solid var(--g)!important}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+#hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:8;background:var(--bg);border-bottom:1px solid var(--bd);padding:8px 12px}
+.h1{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.lg{background:none;color:var(--fg);padding:0;font-size:16px;display:flex;gap:8px;align-items:center}
+.ic{position:relative;background:var(--card);color:var(--fg);border:1px solid var(--bd);width:38px;height:38px;padding:0;border-radius:50%}
+.ic i{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font:700 11px/18px system-ui;min-width:18px;height:18px;border-radius:9px;font-style:normal}
+.sw button{background:var(--gl);color:var(--g);padding:5px 9px;font-size:12.5px;display:inline-block;border-radius:18px}.sw button.on{background:var(--g);color:#fff}
+.pills{display:flex;gap:6px;margin-top:6px;overflow-x:auto}.loc{background:var(--gl);color:var(--g);font-size:13px;padding:5px 11px;border-radius:20px;white-space:nowrap}
+main{padding:12px;max-width:780px;margin:auto}
+.hero{background:linear-gradient(135deg,#eef5e6,#fbf6e6);color:#1d2b20;border-radius:24px;padding:20px 16px 14px;margin-bottom:14px}
+.hero h2{font-size:26px;line-height:1.3;margin:8px 0 4px;color:#1f5230}.hero p{margin:0 0 14px;color:#4b5a4e}
+.b{display:inline-block;background:#fff;border-radius:20px;padding:4px 11px;font-size:13px;color:#2f6f3e;font-weight:700}
+.trust{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:#2f6f3e;font-weight:600}
+input,select{font:inherit;width:100%;padding:11px;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--fg);margin:3px 0 8px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}.chips button{background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:20px;padding:6px 13px;font-size:14px;white-space:nowrap}.chips button.on{background:var(--g);color:#fff}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.im{aspect-ratio:1/1;background:var(--gl);display:grid;place-items:center;font-size:64px}
+.bd2{padding:10px;display:flex;flex-direction:column;gap:7px;flex:1}.bd2 h3{margin:0;font-size:16px}
+.np{font-size:19px;color:var(--g)}.mut{color:var(--mut);font-size:13px}
+.act{display:flex;gap:6px;align-items:center;margin-top:auto}.act>button:last-child{flex:1;padding:9px 6px;font-size:14px}
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:34px;height:34px;padding:0;border-radius:50%}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin:0 0 10px}
+.ln{display:flex;justify-content:space-between;gap:8px;padding:3px 0}.tt{font-weight:700;font-size:18px;border-top:1px solid var(--bd);margin-top:6px;padding-top:8px}
+label{font-size:13px;color:var(--mut)}
+.fab{position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:24px;text-decoration:none;z-index:9}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#1d2b20;color:#fff;padding:8px 16px;border-radius:20px;font-size:14px;z-index:20}
+</style></head>
+<body>
+<header id="hd"></header><main id="app"></main>
+<a class="fab" id="fab" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const J=(k,d)=>{try{return JSON.parse(ls.g(k))||d}catch(e){return d}};
+/* ---- दुकान की सेटिंग (यहाँ बदलें) ---- */
+const SET={phone:'+918957400266',wa:'918957400266',address:'Satuabhar Market',district:'Gorakhpur',pin:'273212',open:'07:00',close:'21:00',freeKm:5,tiers:[[7,20],[10,40]]};
+/* ---- सब्ज़ियाँ (यहाँ जोड़ें/बदलें) : o = [नाम, दाम ₹] ---- */
+const DEFP=[
+{id:'tamatar',e:'🍅',n:['टमाटर','Tamatar'],c:'sabzi',o:[['1 kg',40],['500 g',22]],disc:0},
+{id:'aloo',e:'🥔',n:['आलू','Aloo'],c:'aloo',o:[['1 kg',25],['5 kg',115]],disc:0},
+{id:'pyaz',e:'🧅',n:['प्याज़','Pyaaz'],c:'aloo',o:[['1 kg',30],['5 kg',140]],disc:0},
+{id:'gajar',e:'🥕',n:['गाजर','Gajar'],c:'sabzi',o:[['1 kg',50],['500 g',27]],disc:10},
+{id:'palak',e:'🥬',n:['पालक','Palak'],c:'patte',o:[['1 गुच्छा',15]],disc:0},
+{id:'dhania',e:'🌿',n:['धनिया','Dhaniya'],c:'patte',o:[['1 गुच्छा',10]],disc:0},
+{id:'bhindi',e:'🥒',n:['भिंडी','Bhindi'],c:'hari',o:[['1 kg',60],['500 g',32]],disc:0},
+{id:'kela',e:'🍌',n:['केला','Kela'],c:'phal',o:[['1 दर्जन',50]],disc:0},
+{id:'seb',e:'🍎',n:['सेब','Seb'],c:'phal',o:[['1 kg',160],['500 g',85]],disc:5}];
+let P=DEFP.slice(),DB=null,OWN=false,SHOP={open:true};
+const CATS={sabzi:['सब्ज़ियाँ','Sabziyan'],phal:['फल','Phal'],hari:['हरी सब्ज़ियाँ','Hari Sabziyan'],patte:['पत्तेदार','Patte-dar'],aloo:['आलू-प्याज़','Aloo-Pyaaz']};
+const D={shop:['रवि सब्ज़ी भंडार','Ravi Sabzi Bhandar'],tag:['ताज़ी सब्ज़ियाँ, आपके घर तक','Taazi Sabziyan, Aapke Ghar Tak'],free:['{r} KM तक FREE HOME DELIVERY','{r} KM Tak FREE HOME DELIVERY'],
+hsub:['खेत से सीधी, हर सुबह ताज़ा।','Seedhe khet se, har subah taaza.'],buy:['अभी खरीदें','Abhi Kharidein'],t1:['ताज़ा माल','Taaza Maal'],t2:['कैश ऑन डिलीवरी','Cash on Delivery'],t3:['घर तक डिलीवरी','Ghar Tak Delivery'],
+sph:['सब्ज़ी खोजें, जैसे टमाटर','Sabzi search karein, jaise Tamatar'],all:['सभी','Sabhi'],add:['जोड़ें','Add Karein'],added:['कार्ट में जुड़ गया ✔','Cart mein add ho gaya ✔'],nores:['कोई सब्ज़ी नहीं मिली','Koi sabzi nahi mili'],
+closed:['अभी दुकान बंद है','Abhi dukaan band hai'],adm_no:['सिर्फ़ मालिक के लिए','Sirf malik ke liye'],off:['{d}% छूट','{d}% Chhoot'],cart:['कार्ट','Cart'],empty:['कार्ट खाली है','Cart khaali hai'],name:['नाम','Naam'],mob:['मोबाइल नंबर','Mobile Number'],addr:['पता / गाँव / लैंडमार्क','Pata / Gaon / Landmark'],
+dist:['आपकी दूरी (दुकान से)','Aapki Distance (Dukaan Se)'],sub:['सामान का कुल','Samaan Ka Total'],dc:['डिलीवरी चार्ज','Delivery Charge'],total:['कुल','Total'],cod:['भुगतान: कैश ऑन डिलीवरी','Payment: Cash on Delivery'],
+place:['ऑर्डर करें (WhatsApp पर)','Order Karein (WhatsApp Par)'],fill:['नाम, मोबाइल और पता भरें','Naam, mobile aur pata bharein'],myord:['मेरे ऑर्डर','Mere Orders'],noord:['अभी कोई ऑर्डर नहीं','Abhi koi order nahi'],
+contact:['संपर्क','Contact'],dir:['📍 दिशा देखें','📍 Direction Dekhein'],call:['📞 कॉल करें','📞 Call Karein'],hours:['समय','Samay'],back:['वापस','Wapas'],
+wmsg:['नमस्ते रवि जी, मुझे सब्ज़ी ऑर्डर करनी है।','Namaste Ravi ji, mujhe sabzi order karni hai.'],free0:['FREE','FREE'],ok:['ऑर्डर भेज दिया गया। WhatsApp में "Send" दबाएँ।','Order bhej diya gaya. WhatsApp mein "Send" dabayein.']};
+let S={lang:ls.g('lang')==='hl'?'hl':'hi',view:'shop',q:'',cat:'',cart:J('cart',{}),orders:J('orders',[]),f:J('cust',{name:'',mob:'',addr:'',km:'0'})};
+const L=()=>S.lang==='hl'?1:0;
+const t=(k,v)=>{let s=D[k][L()];for(const x in v||{})s=s.replace('{'+x+'}',v[x]);return s};
+const rup=n=>'₹'+Math.round(n*100)/100;
+const price=(p,i)=>p.o[i][1]*(1-p.disc/100);
+const wa=x=>`https://wa.me/${SET.wa}?text=${encodeURIComponent(x||t('wmsg'))}`;
+const fee=km=>{km=+km;if(km<=SET.freeKm)return 0;for(const [u,c] of SET.tiers)if(km<=u)return c;return null};
+const out=p=>p.avail===false||(p.stock!=null&&+p.stock<=0);
+const lines=()=>Object.entries(S.cart).map(([k,q])=>{const [id,i]=k.split('|'),p=P.find(x=>x.id===id);return p&&p.o[+i]?{k,p,i:+i,q,amt:price(p,+i)*q}:null}).filter(Boolean);
+const sub=()=>lines().reduce((s,l)=>s+l.amt,0);
+const save=()=>{ls.s('cart',JSON.stringify(S.cart))};
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),1500)}
+function hdr(){const n=Object.keys(S.cart).length;
+$('#hd').innerHTML=`<div class="h1"><button class="lg" data-v="shop">🥬 <b>${t('shop')}</b></button><span class="row" style="flex:none;flex-wrap:nowrap;align-items:center"><span class="sw">${[['hi','हिंदी'],['hl','Hinglish']].map(([l,x])=>`<button data-l="${l}" class="${S.lang===l?'on':''}">${x}</button>`).join('')}</span>${OWN?`<button class="ic" data-v="admin" aria-label="Admin">🛠</button>`:''}<button class="ic" data-v="cart" aria-label="${t('cart')}">🛒${n?`<i>${n}</i>`:''}</button></span></div>
+<div class="pills"><button class="loc" data-v="contact">📍 ${esc(SET.address)}, ${esc(SET.district)}</button><button class="loc" data-v="orders">📦 ${t('myord')}</button></div>`}
+function render(keep){stopCam();document.documentElement.lang=L()?'en-IN':'hi';$('#fab').href=wa();hdr();const y=scrollY;const el=$('#app');el.innerHTML='';({shop,cart,orders,contact,admin})[S.view](el);scrollTo(0,keep?y:0)}
+document.addEventListener('click',e=>{const l=e.target.closest('[data-l]');if(l){S.lang=l.dataset.l;ls.s('lang',S.lang);render(1);return}
+const b=e.target.closest('[data-v]');if(b){S.view=b.dataset.v;render()}});
+
+function card(p){const o=p.o,d=p.disc;
+return `<div class="pc" data-id="${p.id}"><div class="im">${p.img?`<img src="${esc(p.img)}" alt="" style="width:100%;height:100%;object-fit:cover">`:p.e}</div><div class="bd2"><h3>${p.n[L()]}${d?` <span class="b" style="font-size:11px">${t('off',{d})}</span>`:''}</h3>
+<div><b class="np" data-pr>${rup(price(p,0))}</b> <span class="mut" data-ul>/ ${o[0][0]}</span></div>
+${o.length>1?`<select data-sel>${o.map((x,i)=>`<option value="${i}">${x[0]}</option>`).join('')}</select>`:''}
+${out(p)?`<div class="mut"><b>${L()?'Stock khatam':'स्टॉक खत्म'}</b></div>`:''}<div class="act" ${out(p)?'hidden':''}><div class="qty"><button class="o" data-m>−</button><b data-n>1</b><button class="o" data-pl>+</button></div><button data-add>${t('add')}</button></div></div></div>`}
+function paint(){const q=S.q.toLowerCase().trim();
+$('#chips').innerHTML=`<div class="chips">${['',...Object.keys(CATS)].map(c=>`<button class="${S.cat===c?'on':''}" data-c="${c}">${c?CATS[c][L()]:t('all')}</button>`).join('')}</div>`;
+const f=P.filter(p=>(!q||p.n.join(' ').toLowerCase().includes(q))&&(!S.cat||p.c===S.cat));
+$('#res').innerHTML=f.length?`<div class="grid">${f.map(card).join('')}</div>`:`<div class="card">${t('nores')}</div>`}
+function shop(el){el.innerHTML=`${SHOP.open===false?`<div class="card" style="border-color:#c62828;color:#c62828;font-weight:700">${t('closed')}</div>`:''}<div class="hero"><span class="b">🚚 ${t('free',{r:SET.freeKm})}</span><h2>${t('tag')}</h2><p>${t('hsub')}</p><button id="go">${t('buy')}</button><div class="trust"><span>✔ ${t('t1')}</span><span>✔ ${t('t2')}</span><span>✔ ${t('t3')}</span></div></div>
+<input id="q" type="search" placeholder="${esc(t('sph'))}" value="${esc(S.q)}"><div id="chips"></div><div id="res"></div>`;paint();
+el.oninput=e=>{if(e.target.id==='q'){S.q=e.target.value;paint()}};
+el.onclick=e=>{if(e.target.id==='go'){$('#q').scrollIntoView({behavior:'smooth'});return}
+const ch=e.target.closest('[data-c]');if(ch){S.cat=ch.dataset.c;paint();return}
+const c=e.target.closest('.pc');if(!c)return;const n=c.querySelector('[data-n]');
+if(e.target.closest('[data-pl]'))n.textContent=+n.textContent+1;
+else if(e.target.closest('[data-m]'))n.textContent=Math.max(1,+n.textContent-1);
+else if(e.target.closest('[data-add]')){const sl=c.querySelector('[data-sel]'),k=c.dataset.id+'|'+(sl?sl.value:0);S.cart[k]=(S.cart[k]||0)+ +n.textContent;n.textContent=1;save();toast(t('added'));hdr()}};
+el.onchange=e=>{const sl=e.target.closest('[data-sel]');if(!sl)return;const c=sl.closest('.pc'),p=P.find(x=>x.id===c.dataset.id);c.querySelector('[data-pr]').textContent=rup(price(p,+sl.value));c.querySelector('[data-ul]').textContent='/ '+p.o[+sl.value][0]}}
+
+function cart(el){const ls_=lines();
+if(!ls_.length){el.innerHTML=`<div class="card">${t('empty')}</div><button data-v="shop">${t('back')}</button>`;return}
+const kms=[...Array(SET.tiers[SET.tiers.length-1][0]+1).keys()].slice(1);
+el.innerHTML=`<div id="cl">${ls_.map(l=>`<div class="card"><div class="ln"><b>${l.p.e} ${l.p.n[L()]}</b><b>${rup(l.amt)}</b></div><div class="ln"><span class="mut">${l.p.o[l.i][0]} × ${rup(price(l.p,l.i))}</span><span class="qty" data-k="${l.k}"><button class="o" data-d>−</button><b>${l.q}</b><button class="o" data-u>+</button></span></div></div>`).join('')}</div>
+<div class="card"><label>${t('name')}</label><input id="fn" value="${esc(S.f.name)}"><label>${t('mob')}</label><input id="fm" type="tel" inputmode="numeric" maxlength="10" value="${esc(S.f.mob)}"><label>${t('addr')}</label><input id="fa" value="${esc(S.f.addr)}">
+<label>${t('dist')}</label><select id="fk">${[0,...kms].map(k=>`<option value="${k}" ${+S.f.km===k?'selected':''}>${k===0?`0–${SET.freeKm} KM`:k+' KM'}</option>`).filter((x,i)=>i===0||kms[i-1]>SET.freeKm).join('')}</select></div>
+<div class="card" id="sm"></div><button id="po">💬 ${t('place')}</button>`;
+const sm=()=>{const km=$('#fk').value,f=fee(km===0?0:km),s=sub();$('#sm').innerHTML=`<div class="ln"><span>${t('sub')}</span><span>${rup(s)}</span></div><div class="ln"><span>${t('dc')}</span><span>${f===0?t('free0'):rup(f)}</span></div><div class="ln tt"><span>${t('total')}</span><span>${rup(s+f)}</span></div><div class="mut">${t('cod')}</div>`;return f};sm();
+el.onchange=e=>{if(e.target.id==='fk'){S.f.km=e.target.value;sm()}};
+el.oninput=e=>{const m={fn:'name',fm:'mob',fa:'addr'}[e.target.id];if(m){S.f[m]=e.target.value;ls.s('cust',JSON.stringify(S.f))}};
+el.onclick=e=>{const q=e.target.closest('[data-k]');
+if(q){const k=q.dataset.k;S.cart[k]+=e.target.closest('[data-u]')?1:-1;if(S.cart[k]<=0)delete S.cart[k];save();render(1);return}
+if(e.target.closest('#po')){if(SHOP.open===false){alert(t('closed'));return}const f=S.f;if(!f.name.trim()||!/^\d{10}$/.test(f.mob.trim())||!f.addr.trim()){alert(t('fill'));return}
+const fe=fee(f.km),s=sub(),tot=s+fe,id='RS'+Date.now().toString().slice(-6);
+const txt=`🥬 ${t('shop')} — ${id}\n\n`+lines().map(l=>`• ${l.p.n[L()]} (${l.p.o[l.i][0]}) × ${l.q} = ${rup(l.amt)}`).join('\n')+`\n\n${t('sub')}: ${rup(s)}\n${t('dc')}: ${fe===0?'FREE':rup(fe)}\n${t('total')}: ${rup(tot)}\n${t('cod')}\n\n${t('name')}: ${f.name}\n${t('mob')}: ${f.mob}\n${t('addr')}: ${f.addr}\n${t('dist')}: ${f.km} KM`;
+S.orders.unshift({id,date:new Date().toLocaleString('en-IN'),tot,items:lines().map(l=>`${l.p.n[L()]} ×${l.q}`).join(', ')});ls.s('orders',JSON.stringify(S.orders.slice(0,30)));
+S.cart={};save();toast(t('ok'));window.open(wa(txt),'_blank');S.view='orders';render()}}}
+
+function orders(el){el.innerHTML=`<h3>📦 ${t('myord')}</h3>`+(S.orders.length?S.orders.map(o=>`<div class="card"><div class="ln"><b>${esc(o.id)}</b><b>${rup(o.tot)}</b></div><div class="mut">${esc(o.date)}</div><div>${esc(o.items)}</div></div>`).join(''):`<div class="card">${t('noord')}</div>`)}
+function contact(el){const q=encodeURIComponent([SET.address,SET.district,SET.pin].join(' '));
+el.innerHTML=`<div class="card"><h3>📍 ${t('contact')}</h3><p>${esc(SET.address)}, ${esc(SET.district)} ${esc(SET.pin)}</p><p class="mut">${t('hours')}: ${SET.open} – ${SET.close}</p>
+<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${q}">${t('dir')}</a><a class="btn o" href="tel:${SET.phone}">${t('call')}</a></div></div>`}
+const UN=['1 kg','500 g','250 g','1 piece','1 guccha','dozen'],CK=Object.keys(CATS);let EDIT=null,PHOTO='';
+const refresh=()=>{hdr();if(S.view==='shop'&&$('#res'))paint();else if(['cart','admin'].includes(S.view)&&!/INPUT|SELECT/.test(document.activeElement.tagName))render(1)};
+const fromDoc=(id,d)=>({id,db:1,e:d.e||'🥬',n:[d.nh||d.nl||'',d.nl||d.nh||''],c:d.c||'sabzi',o:[[d.unit||'1 kg',+d.price||0]],disc:+d.disc||0,stock:d.stock,avail:d.avail!==false,img:d.img||''});
+(async()=>{try{const[db,u]=await Promise.all([claude.use('db'),claude.use('user')]);DB=db;OWN=u?await u.isOwner():false;
+if(db){db.collection('products').onSnapshot(q=>{P=q.empty?DEFP.slice():q.docs.map(d=>fromDoc(d.id,d.data()));refresh()},()=>{});
+db.doc('settings/shop').onSnapshot(q=>{SHOP=q.exists?q.data():{open:true};refresh()},()=>{})}}catch(e){}hdr()})();
+let TMP='',STREAM=null,REM=false,LAST='gal';
+function sc(src,w,h){const k=Math.min(1,640/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(h*k);c.getContext('2d').drawImage(src,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.8)}
+function small(file){return createImageBitmap(file).then(b=>sc(b,b.width,b.height))}
+const stopCam=()=>{if(STREAM){STREAM.getTracks().forEach(x=>x.stop());STREAM=null}};
+const IMG=u=>`<img src="${esc(u)}" alt="" style="width:120px;height:120px;object-fit:cover;border-radius:12px">`;
+function pvDraw(){const pv=$('#pv');if(!pv)return;const cur=REM?'':(PHOTO||(EDIT&&(P.find(p=>p.id===EDIT)||{}).img)||'');
+pv.innerHTML=TMP?IMG(TMP)+'<div class="row"><button class="o" id="rt">Retake</button><button id="up">Use Photo</button></div>':cur?IMG(cur)+'<div class="row"><button class="o" id="rp">Replace</button><button class="o" id="rm">Remove</button></div>':''}
+async function openCam(){const m=$('#cm');if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){$('#fc').click();return}
+m.style.display='flex';$('#cmsg').textContent='';
+try{STREAM=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280}},audio:false});const v=$('#vid');v.srcObject=STREAM;await v.play()}
+catch(e){stopCam();$('#cmsg').textContent='Camera ki permission nahi mili. Browser/phone settings mein Camera allow karein, ya neeche se Gallery chunein.'}}
+function admin(el){if(!OWN||!DB){el.innerHTML=`<div class="card">${t('adm_no')}</div>`;return}
+const dbp=P.filter(p=>p.db),e=EDIT&&dbp.find(p=>p.id===EDIT)||{},pv=PHOTO||e.img||'',o0=e.o?e.o[0]:['1 kg',''];
+el.innerHTML=`<h3>🛠 Admin — Ravi</h3><div class="card"><div class="ln"><b>${SHOP.open===false?'🔴 Closed':'🟢 Open'}</b><button id="tg" style="padding:8px 14px">${SHOP.open===false?'Open karein':'Band karein'}</button></div></div>
+<div class="card"><b>${EDIT?'Edit':'+ Product'}</b><label>हिंदी नाम</label><input id="an" value="${esc(e.n?e.n[0]:'')}"><label>Hinglish naam</label><input id="al" value="${esc(e.n?e.n[1]:'')}">
+<div class="row"><div><label>Emoji</label><input id="ae" value="${esc(e.e||'🥬')}"></div><div><label>Category</label><select id="ac">${CK.map(c=>`<option value="${c}" ${e.c===c?'selected':''}>${CATS[c][1]}</option>`).join('')}</select></div></div>
+<div class="row"><div><label>Price ₹</label><input id="ap" type="number" inputmode="decimal" value="${o0[1]}"></div><div><label>Unit</label><select id="au">${UN.map(x=>`<option ${o0[0]===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+<div class="row"><div><label>Stock</label><input id="as" type="number" inputmode="numeric" value="${e.stock??''}"></div><div><label>Discount %</label><input id="ad" type="number" value="${e.disc||''}"></div></div>
+<label>Photo</label><div class="row"><button class="o" id="tk">📷 Take Photo</button><button class="o" id="cg">🖼 Choose from Gallery</button></div><input id="af" type="file" accept="image/*" hidden><input id="fc" type="file" accept="image/*" capture="environment" hidden><div id="pv" style="margin:8px 0"></div>
+<div id="cm" style="display:none;position:fixed;inset:0;z-index:30;background:#000;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px"><video id="vid" playsinline muted style="max-width:100%;max-height:65%;border-radius:12px"></video><div id="cmsg" style="color:#fff;text-align:center"></div><div class="row" style="width:100%;max-width:420px"><button id="cap">Capture</button><button class="o" id="cgal" style="color:#fff!important;border-color:#fff!important">Gallery</button><button class="o" id="cclose" style="color:#fff!important;border-color:#fff!important">Close</button></div></div>
+<label><input id="aa" type="checkbox" style="width:auto" ${e.avail===false?'':'checked'}> In Stock</label><div class="row"><button id="sv">Save</button>${EDIT?'<button class="o" id="cx">Cancel</button>':''}</div></div>
+${dbp.length?'':'<button class="o" id="seed">Default sabziyan daalein</button>'}
+`+dbp.map(p=>`<div class="card" data-pid="${p.id}"><div class="ln"><b>${p.e} ${p.n[1]}</b><span>${out(p)?'🔴 Out':+p.stock<5?'⚠️ Low':'🟢 In'}</span></div><div class="row"><div><label>₹ / ${p.o[0][0]}</label><input data-f="price" type="number" value="${p.o[0][1]}"></div><div><label>Stock</label><input data-f="stock" type="number" value="${p.stock??''}"></div></div><div class="row"><button class="o" data-ed>Edit</button><button class="o" data-av>${p.avail===false?'In stock':'Out of stock'}</button><button class="o" data-del>Delete</button></div></div>`).join('');
+pvDraw();const W=(id,d,m)=>DB.doc('products/'+id)[m||'update'](d).catch(()=>alert('Save nahi hua'));
+el.onchange=async x=>{const i=x.target;if((i.id==='af'||i.id==='fc')&&i.files[0]){TMP=await small(i.files[0]);i.value='';pvDraw()}
+else if(i.dataset.f){const id=i.closest('[data-pid]').dataset.pid;W(id,{[i.dataset.f]:i.value===''?null:+i.value})}};
+el.onclick=async x=>{const T=x.target,c=T.closest('[data-pid]'),id=c&&c.dataset.pid;
+if(T.id==='tk'||T.id==='rt'&&LAST==='cam')openCam(),LAST='cam';
+else if(T.id==='cg'||T.id==='rp'||T.id==='rt'||T.id==='cgal'){stopCam();$('#cm').style.display='none';LAST='gal';$('#af').click()}
+else if(T.id==='cclose'){stopCam();$('#cm').style.display='none'}
+else if(T.id==='cap'){const v=$('#vid');if(!v.videoWidth)return;TMP=sc(v,v.videoWidth,v.videoHeight);stopCam();$('#cm').style.display='none';pvDraw()}
+else if(T.id==='up'){PHOTO=TMP;TMP='';REM=false;pvDraw();toast('✔')}
+else if(T.id==='rm'){PHOTO='';REM=false;TMP='';REM=true;pvDraw()}
+else if(T.id==='tg')DB.doc('settings/shop').set({open:SHOP.open===false});
+else if(T.id==='seed')for(const p of DEFP)W(p.id,{e:p.e,nh:p.n[0],nl:p.n[1],c:p.c,unit:p.o[0][0],price:p.o[0][1],disc:p.disc,stock:50,avail:true,img:''},'set');
+else if(T.id==='cx'){EDIT=null;PHOTO='';REM=false;TMP='';render()}
+else if(T.id==='sv'){const v=k=>$('#'+k).value.trim();if(!(v('an')||v('al'))||!(+v('ap')>0)){alert('Naam aur daam bharein');return}
+const nid=EDIT||((v('al')||'p').toLowerCase().replace(/[^a-z0-9]/g,'')||'p')+Date.now().toString(36);
+await W(nid,{e:v('ae')||'🥬',nh:v('an')||v('al'),nl:v('al')||v('an'),c:v('ac'),unit:v('au'),price:+v('ap'),disc:+v('ad')||0,stock:v('as')===''?null:+v('as'),avail:$('#aa').checked,img:REM?'':(PHOTO||e.img||'')},'set');EDIT=null;PHOTO='';REM=false;TMP='';toast('✔');render()}
+else if(T.closest('[data-ed]')){EDIT=id;PHOTO='';REM=false;TMP='';render()}
+else if(T.closest('[data-av]')){const p=P.find(z=>z.id===id);W(id,{avail:p.avail===false})}
+else if(T.closest('[data-del]')&&confirm('Delete?'))DB.doc('products/'+id).delete()}}
+render();
+</script></body></html>

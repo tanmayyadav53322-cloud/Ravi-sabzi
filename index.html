@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="hi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>रवि सब्ज़ी भंडार</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#fbfaf4;--fg:#1d2b20;--card:#fff;--g:#2f6f3e;--gl:#eaf3e6;--gold:#d99a1b;--mut:#6b7a6e;--bd:#e8e6da;--red:#c62828}
+@media(prefers-color-scheme:dark){:root{--bg:#121a14;--fg:#e8efe9;--card:#1b261e;--gl:#223427;--mut:#9fb0a3;--bd:#2c3b30;--g:#6fbf82}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 'Noto Sans Devanagari',system-ui,sans-serif;padding:env(safe-area-inset-top) 0 90px}
+button,.btn{font:inherit;font-weight:600;border:0;border-radius:14px;padding:12px 14px;background:#2f6f3e;color:#fff;text-align:center;text-decoration:none;display:block;cursor:pointer;min-height:44px}
+button:disabled{opacity:.5}.o{background:transparent!important;color:var(--g)!important;border:1.5px solid var(--g)!important}.rd{background:var(--red)!important;color:#fff!important;border:0!important}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+#hd{position:sticky;top:0;z-index:8;background:var(--bg);border-bottom:1px solid var(--bd);padding:8px 12px}
+.h1{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.lg{background:none;color:var(--fg);padding:0;font-size:16px;min-height:0}
+.ic{position:relative;background:var(--card);color:var(--fg);border:1px solid var(--bd);width:40px;height:40px;padding:0;border-radius:50%;min-height:0}
+.ic i{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font:700 11px/18px system-ui;min-width:18px;height:18px;border-radius:9px;font-style:normal}
+.sw button{background:var(--gl);color:var(--g);padding:5px 9px;font-size:12.5px;display:inline-block;border-radius:18px;min-height:0}.sw button.on{background:var(--g);color:#fff}
+.pills{display:flex;gap:6px;margin-top:6px;overflow-x:auto}.loc{background:var(--gl);color:var(--g);font-size:13px;padding:5px 11px;border-radius:20px;white-space:nowrap;min-height:0}
+main{padding:12px;max-width:820px;margin:auto}
+.hero{background:linear-gradient(135deg,#eef5e6,#fbf6e6);color:#1d2b20;border-radius:24px;padding:20px 16px 14px;margin-bottom:14px}
+.hero h2{font-size:26px;line-height:1.3;margin:8px 0 4px;color:#1f5230}.hero p{margin:0 0 14px;color:#4b5a4e}
+.b{display:inline-block;background:#fff;border-radius:20px;padding:4px 11px;font-size:13px;color:#2f6f3e;font-weight:700}
+input,select,textarea{font:inherit;width:100%;padding:11px;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--fg);margin:3px 0 8px}
+input[type=checkbox]{width:auto}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}.chips button{background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:20px;padding:6px 13px;font-size:14px;white-space:nowrap;min-height:0}.chips button.on{background:var(--g);color:#fff}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.im{aspect-ratio:1/1;background:var(--gl);display:grid;place-items:center;font-size:64px;position:relative}.im img{width:100%;height:100%;object-fit:cover}
+.bd2{padding:10px;display:flex;flex-direction:column;gap:7px;flex:1}.bd2 h3{margin:0;font-size:16px}
+.np{font-size:19px;color:var(--g)}.mut{color:var(--mut);font-size:13px}
+.act{display:flex;gap:6px;align-items:center;margin-top:auto}.act>button:last-child{flex:1;padding:9px 6px;font-size:14px}
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:36px;height:36px;padding:0;border-radius:50%;min-height:0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin:0 0 10px}
+.ln{display:flex;justify-content:space-between;gap:8px;padding:3px 0}.tt{font-weight:700;font-size:18px;border-top:1px solid var(--bd);margin-top:6px;padding-top:8px}
+label{font-size:13px;color:var(--mut)}
+.stat{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:12px}.stat .card{margin:0}.stat b{font-size:24px;display:block}
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px}.bars div{flex:1;background:var(--g);border-radius:5px 5px 0 0;min-height:2px;position:relative}.bars span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:10px;color:var(--mut)}
+.tag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;background:var(--gl);color:var(--g)}.tag.r{background:#fde7e7;color:var(--red)}.tag.y{background:#fff1d6;color:#8a5a00}
+.fab{position:fixed;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));width:48px;height:48px;border-radius:50%;background:#25d366;display:grid;place-items:center;font-size:24px;text-decoration:none;z-index:9}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#1d2b20;color:#fff;padding:8px 16px;border-radius:20px;font-size:14px;z-index:40}
+.nav{display:none;flex-direction:column;gap:4px;margin-top:8px}.nav.open{display:flex}.nav a{padding:12px;border-radius:10px;background:var(--gl);color:var(--g);text-decoration:none;font-weight:600}
+</style></head>
+<body>
+<header id="hd"></header><main id="app"></main>
+<a class="fab" id="fab" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+<script>
+/* ===== Supabase ===== */
+const sb=supabase.createClient('https://stlslwkpsaxqroqobsgj.supabase.co','sb_publishable_y48Orc94vCys_rCF7cadWA_r-TzZHEu');
+if(localStorage.rem==='0'&&!sessionStorage.alive)sb.auth.signOut();
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const J=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},SV=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const rup=n=>'₹'+Math.round(n*100)/100;
+let S={lang:localStorage.lang==='hl'?'hl':'hi',prods:[],cats:[],set:{tiers:[],free_radius_km:5,max_km:10,is_open:true,whatsapp:'918957400266',phone:'+918957400266'},cart:J('cart',{}),my:J('my',[]),f:J('cust',{name:'',mob:'',addr:'',km:0}),q:'',cat:'',coupon:'',unread:0,admin:false};
+const T=(a,b)=>S.lang==='hl'?b:a,nm=p=>S.lang==='hl'?p.name_hl:p.name_hi,price=p=>+(p.discount_price??p.price);
+const outOf=p=>!p.is_available||(p.stock!=null&&+p.stock<=0);
+const wa=x=>`https://wa.me/${S.set.whatsapp}?text=${encodeURIComponent(x||T('नमस्ते रवि जी, मुझे सब्ज़ी ऑर्डर करनी है।','Namaste Ravi ji, mujhe sabzi order karni hai.'))}`;
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),1800)}
+const saveCart=()=>SV('cart',S.cart);
+function feeOf(km,sub){const s=S.set;if(km<=+s.free_radius_km||(+s.free_above>0&&sub>=+s.free_above))return 0;for(const t of [...(s.tiers||[])].sort((a,b)=>a.km-b.km))if(km<=t.km)return +t.fee;return km<=+s.max_km?+s.delivery_charge:null}
+async function loadShop(){const[a,b,c]=await Promise.all([sb.from('products').select('*').order('created_at'),sb.from('categories').select('*').eq('is_active',true).order('sort'),sb.from('settings').select('*').eq('id',1).maybeSingle()]);
+if(a.data)S.prods=a.data;if(b.data)S.cats=b.data;if(c.data)S.set=c.data}
+const ERR={SHOP_CLOSED:['दुकान अभी बंद है','Dukaan abhi band hai'],INVALID_DETAILS:['नाम, 10 अंक का मोबाइल और पता भरें','Naam, 10 digit mobile aur pata bharein'],OUT_OF_STOCK:['स्टॉक कम/खत्म','Stock kam/khatam'],MIN_ORDER:['कम से कम ऑर्डर पूरा नहीं','Minimum order poora nahi'],OUT_OF_AREA:['इस दूरी पर डिलीवरी नहीं','Is distance par delivery nahi'],INVALID_COUPON:['कूपन सही नहीं','Coupon sahi nahi'],TOO_MANY_ORDERS:['बहुत ज़्यादा ऑर्डर, थोड़ी देर बाद कोशिश करें','Bahut zyada order, thodi der baad koshish karein']};
+const errMsg=e=>{const m=String(e.message||e),k=Object.keys(ERR).find(x=>m.includes(x));return k?T(...ERR[k])+(m.includes(':')?' ('+m.split(':').slice(1).join(':').trim()+')':''):m};
+
+/* ===== router ===== */
+const path=()=>location.hash.slice(1)||'/';
+async function hdr(){const adm=path().startsWith('/admin')&&S.admin;
+if(adm){$('#hd').innerHTML=`<div class="h1"><button class="lg" data-nav>☰ <b>Ravi Admin</b></button><span class="row" style="flex:none"><a class="ic btn" href="#/admin/notifs" style="display:grid;place-items:center">🔔${S.unread?`<i>${S.unread}</i>`:''}</a></span></div><div class="nav" id="nv">${[['dash','🏠 Dashboard'],['orders','📦 Orders'],['products','🥬 Products'],['customers','👥 Customers'],['sales','📊 Sales'],['coupons','🏷 Coupons'],['settings','⚙️ Settings'],['notifs','🔔 Notifications']].map(([a,b])=>`<a href="#/admin/${a}">${b}</a>`).join('')}<a href="#/">🛒 Dukaan dekhein</a><a href="#" data-out>🚪 Logout</a></div>`;return}
+const n=Object.keys(S.cart).length;
+$('#hd').innerHTML=`<div class="h1"><a class="lg" href="#/" style="text-decoration:none;color:inherit">🥬 <b>${T('रवि सब्ज़ी भंडार','Ravi Sabzi Bhandar')}</b></a><span class="row" style="flex:none;flex-wrap:nowrap;align-items:center"><span class="sw">${[['hi','हिंदी'],['hl','Hinglish']].map(([l,x])=>`<button data-l="${l}" class="${S.lang===l?'on':''}">${x}</button>`).join('')}</span><a class="ic btn" href="#/cart" style="display:grid;place-items:center">🛒${n?`<i>${n}</i>`:''}</a></span></div>
+<div class="pills"><a class="loc btn" href="#/contact">📍 ${esc(S.set.address||'')}</a><a class="loc btn" href="#/orders">📦 ${T('मेरे ऑर्डर','Mere Orders')}</a></div>`}
+async function render(keep){clearInterval(window.PT);stopCam();document.documentElement.lang=S.lang==='hl'?'en-IN':'hi';$('#fab').href=wa();
+const p=path(),el=$('#app'),y=scrollY;el.onclick=el.onchange=el.oninput=null;
+if(p.startsWith('/admin')){await guard(p);return}
+await hdr();el.innerHTML='';({'/':shop,'/cart':cart,'/orders':orders,'/contact':contact,'/done':done}[p]||shop)(el);scrollTo(0,keep?y:0)}
+window.addEventListener('hashchange',()=>render());
+document.addEventListener('click',async e=>{const l=e.target.closest('[data-l]');if(l){S.lang=l.dataset.l;localStorage.lang=S.lang;render(1)}
+if(e.target.closest('[data-nav]'))$('#nv').classList.toggle('open');
+if(e.target.closest('[data-out]')){e.preventDefault();await sb.auth.signOut();S.admin=false;location.hash='#/admin/login'}});
+
+/* ===== customer ===== */
+function card(p){const o=outOf(p),d=p.discount_price!=null&&+p.discount_price<+p.price;
+return `<div class="pc" data-id="${p.id}"><div class="im">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(nm(p))}" loading="lazy">`:p.emoji||'🥬'}</div><div class="bd2"><h3>${esc(nm(p))}</h3>
+<div><b class="np">${rup(price(p))}</b>${d?` <s class="mut">${rup(p.price)}</s>`:''} <span class="mut">/ ${esc(p.unit)}</span></div>
+${o?`<div class="mut"><b>${T('स्टॉक खत्म','Stock khatam')}</b></div>`:`<div class="act"><div class="qty"><button class="o" data-m>−</button><b data-n>1</b><button class="o" data-pl>+</button></div><button data-add>${T('जोड़ें','Add Karein')}</button></div>`}</div></div>`}
+function paint(){const q=S.q.toLowerCase().trim(),cs=S.cats;
+$('#chips').innerHTML=`<div class="chips">${[{id:'',name_hi:'सभी',name_hl:'Sabhi'},...cs].map(c=>`<button data-c="${c.id}" class="${S.cat===c.id?'on':''}">${esc(T(c.name_hi,c.name_hl))}</button>`).join('')}</div>`;
+const f=S.prods.filter(p=>(!q||(p.name_hi+' '+p.name_hl).toLowerCase().includes(q))&&(!S.cat||p.category===S.cat));
+$('#res').innerHTML=f.length?`<div class="grid">${f.map(card).join('')}</div>`:`<div class="card">${T('कोई सब्ज़ी नहीं मिली','Koi sabzi nahi mili')}</div>`}
+function shop(el){const s=S.set;
+el.innerHTML=`${s.is_open===false?`<div class="card" style="border-color:var(--red);color:var(--red);font-weight:700">${T('अभी दुकान बंद है','Abhi dukaan band hai')}</div>`:''}<div class="hero"><span class="b">🚚 ${T(`${s.free_radius_km} KM तक FREE HOME DELIVERY`,`${s.free_radius_km} KM Tak FREE HOME DELIVERY`)}</span><h2>${esc(s.banner_heading||'')}</h2><p>${esc(s.banner_desc||'')}</p><button id="go">${T('अभी खरीदें','Abhi Kharidein')}</button></div>
+<input id="q" type="search" placeholder="${T('सब्ज़ी खोजें, जैसे टमाटर','Sabzi search karein')}" value="${esc(S.q)}"><div id="chips"></div><div id="res"></div>`;paint();
+el.oninput=e=>{if(e.target.id==='q'){S.q=e.target.value;paint()}};
+el.onclick=e=>{if(e.target.id==='go'){$('#q').scrollIntoView({behavior:'smooth'});return}
+const ch=e.target.closest('[data-c]');if(ch){S.cat=ch.dataset.c;paint();return}
+const c=e.target.closest('.pc');if(!c)return;const n=c.querySelector('[data-n]');
+if(e.target.closest('[data-pl]'))n.textContent=+n.textContent+1;else if(e.target.closest('[data-m]'))n.textContent=Math.max(1,+n.textContent-1);
+else if(e.target.closest('[data-add]')){const id=c.dataset.id,p=S.prods.find(x=>x.id===id),q=(S.cart[id]||0)+ +n.textContent;
+if(p.stock!=null&&q>+p.stock){toast(T('स्टॉक कम है','Stock kam hai'));return}S.cart[id]=q;saveCart();n.textContent=1;toast(T('कार्ट में जुड़ गया ✔','Cart mein add ho gaya ✔'));hdr()}}}
+const lines=()=>Object.entries(S.cart).map(([id,q])=>{const p=S.prods.find(x=>x.id===id);return p&&!outOf(p)?{p,q,amt:price(p)*q}:null}).filter(Boolean);
+function cart(el){const L=lines();
+if(!L.length){el.innerHTML=`<div class="card">${T('कार्ट खाली है','Cart khaali hai')}</div><a class="btn" href="#/">${T('वापस','Wapas')}</a>`;return}
+const s=S.set,kms=[+s.free_radius_km];for(let k=+s.free_radius_km+1;k<=+s.max_km;k++)kms.push(k);if(!kms.includes(+S.f.km))S.f.km=kms[0];
+el.innerHTML=L.map(l=>`<div class="card"><div class="ln"><b>${l.p.emoji||''} ${esc(nm(l.p))}</b><b>${rup(l.amt)}</b></div><div class="ln"><span class="mut">${esc(l.p.unit)} × ${rup(price(l.p))}</span><span class="qty" data-k="${l.p.id}"><button class="o" data-d>−</button><b>${l.q}</b><button class="o" data-u>+</button></span></div></div>`).join('')+
+`<div class="card"><label>${T('नाम','Naam')}</label><input id="fn" value="${esc(S.f.name)}"><label>${T('मोबाइल नंबर','Mobile Number')}</label><input id="fm" type="tel" inputmode="numeric" maxlength="10" value="${esc(S.f.mob)}"><label>${T('पता / गाँव / लैंडमार्क','Pata / Gaon / Landmark')}</label><input id="fa" value="${esc(S.f.addr)}">
+<label>${T('आपकी दूरी (दुकान से)','Aapki Distance (Dukaan Se)')}</label><select id="fk">${kms.map((k,i)=>`<option value="${k}" ${+S.f.km===k?'selected':''}>${i?k+' KM':'0–'+k+' KM'}</option>`).join('')}</select>
+<label>${T('कूपन कोड (अगर है)','Coupon Code (agar hai)')}</label><input id="fc" value="${esc(S.coupon)}"></div><div class="card" id="sm"></div><button id="po">💬 ${T('ऑर्डर करें','Order Karein')}</button>`;
+const sm=()=>{const sub=L.reduce((a,l)=>a+l.amt,0),f=feeOf(+S.f.km,sub);$('#sm').innerHTML=`<div class="ln"><span>${T('सामान का कुल','Samaan Ka Total')}</span><span>${rup(sub)}</span></div><div class="ln"><span>${T('डिलीवरी चार्ज','Delivery Charge')}</span><span>${f===0?'FREE':f==null?'—':rup(f)}</span></div><div class="ln tt"><span>${T('कुल','Total')}</span><span>${rup(sub+(f||0))}</span></div><div class="mut">${T('भुगतान: कैश ऑन डिलीवरी (कूपन छूट ऑर्डर पर जुड़ेगी)','Payment: Cash on Delivery (coupon chhoot order par judegi)')}</div>`};sm();
+el.onchange=e=>{if(e.target.id==='fk'){S.f.km=+e.target.value;sm()}};
+el.oninput=e=>{const m={fn:'name',fm:'mob',fa:'addr'}[e.target.id];if(m){S.f[m]=e.target.value;SV('cust',S.f)}if(e.target.id==='fc')S.coupon=e.target.value};
+el.onclick=async e=>{const q=e.target.closest('[data-k]');
+if(q){const id=q.dataset.k,p=S.prods.find(x=>x.id===id);let n=S.cart[id]+(e.target.closest('[data-u]')?1:-1);if(p.stock!=null&&n>+p.stock){toast(T('स्टॉक कम है','Stock kam hai'));return}if(n<=0)delete S.cart[id];else S.cart[id]=n;saveCart();render(1);return}
+if(e.target.id==='po'){const b=e.target;b.disabled=true;const f=S.f;
+const{data,error}=await sb.rpc('place_order',{p_name:f.name,p_phone:f.mob.trim(),p_address:f.addr,p_km:+f.km,p_items:L.map(l=>({id:l.p.id,qty:l.q})),p_coupon:S.coupon||null});
+b.disabled=false;if(error){alert(errMsg(error));await loadShop();return}
+S.my.unshift({id:data.id,phone:f.mob.trim(),total:data.total,at:new Date().toLocaleString('en-IN')});SV('my',S.my.slice(0,30));S.cart={};saveCart();S.last={...data,L,f:{...f}};location.hash='#/done'}}}
+const _r=render;
+async function orders(el){el.innerHTML=`<h3>📦 ${T('मेरे ऑर्डर','Mere Orders')}</h3>`;
+if(path()==='/done'||S.last&&false){}
+if(!S.my.length){el.innerHTML+=`<div class="card">${T('अभी कोई ऑर्डर नहीं','Abhi koi order nahi')}</div>`;return}
+const ST={new:['ऑर्डर मिल गया','Order Mil Gaya'],accepted:['कन्फर्म हो गया','Confirm Ho Gaya'],packing:['तैयार हो रहा है','Taiyar Ho Raha Hai'],out_for_delivery:['डिलीवरी के लिए निकल गया','Delivery Ke Liye Nikal Gaya'],delivered:['डिलीवर हो गया','Deliver Ho Gaya'],cancelled:['रद्द हो गया','Cancel Ho Gaya']};
+const R=await Promise.all(S.my.map(o=>sb.rpc('order_status',{p_id:o.id,p_phone:o.phone})));
+el.innerHTML+=S.my.map((o,i)=>`<div class="card"><div class="ln"><b>${esc(o.id)}</b><b>${rup(o.total)}</b></div><div class="mut">${esc(o.at)}</div><span class="tag">${R[i].data?T(...ST[R[i].data]):'—'}</span></div>`).join('')}
+function contact(el){const s=S.set,q=encodeURIComponent(s.address||'');
+el.innerHTML=`<div class="card"><h3>📍 ${T('संपर्क','Contact')}</h3><p>${esc(s.address||'')}</p><p class="mut">${T('समय','Samay')}: ${esc(s.open_time||'')} – ${esc(s.close_time||'')}</p><div class="row"><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${q}">${T('📍 दिशा देखें','📍 Direction')}</a><a class="btn o" href="tel:${esc(s.phone)}">${T('📞 कॉल करें','📞 Call Karein')}</a><a class="btn o" target="_blank" rel="noopener" href="${wa()}">💬 WhatsApp</a></div></div>`}
+function done(el){const d=S.last;if(!d){location.hash='#/orders';return}
+const txt=`🥬 Ravi Sabzi Bhandar — ${d.id}\n`+d.L.map(l=>`• ${l.p.name_hl} × ${l.q}`).join('\n')+`\nTotal: ${rup(d.total)} (COD)\n${d.f.name}, ${d.f.mob}\n${d.f.addr}`;
+el.innerHTML=`<div class="card"><h3>✅ ${T('ऑर्डर हो गया!','Order Ho Gaya!')}</h3><p>${T('ऑर्डर नंबर','Order Number')}: <b>${esc(d.id)}</b></p><div class="ln"><span>${T('सामान','Samaan')}</span><span>${rup(d.subtotal)}</span></div><div class="ln"><span>${T('डिलीवरी','Delivery')}</span><span>${d.delivery_fee?rup(d.delivery_fee):'FREE'}</span></div>${d.discount?`<div class="ln"><span>${T('छूट','Chhoot')}</span><span>−${rup(d.discount)}</span></div>`:''}<div class="ln tt"><span>${T('कुल','Total')}</span><span>${rup(d.total)}</span></div><p class="mut">${T('भुगतान: कैश ऑन डिलीवरी','Payment: Cash on Delivery')}</p></div>
+<a class="btn" target="_blank" rel="noopener" href="${wa(txt)}">💬 ${T('रवि जी को WhatsApp करें','Ravi Ji Ko WhatsApp Karein')}</a><a class="btn o" style="margin-top:8px" href="#/orders">${T('मेरे ऑर्डर देखें','Mere Orders Dekhein')}</a>`}
+
+/* ===== admin ===== */
+async function guard(p){const el=$('#app');el.innerHTML='';
+const{data:{session}}=await sb.auth.getSession();let ok=false;
+if(session){const r=await sb.from('admins').select('user_id').maybeSingle();ok=!!r.data}
+S.admin=ok;
+if(!ok){if(p!=='/admin/login'){location.hash='#/admin/login';return}$('#hd').innerHTML=`<div class="h1"><a class="lg" href="#/" style="text-decoration:none;color:inherit">🥬 <b>Ravi Sabzi Bhandar</b></a></div>`;login(el,!!session);return}
+if(p==='/admin/login'||p==='/admin'){location.hash='#/admin/dash';return}
+const{count}=await sb.from('notifications').select('*',{count:'exact',head:true}).eq('is_read',false);S.unread=count||0;await hdr();
+const V={dash,orders:aOrders,products:aProducts,customers:aCust,sales:aSales,coupons:aCoup,settings:aSet,notifs:aNot};
+await (V[p.split('/')[2]]||dash)(el)}
+function login(el,denied){el.innerHTML=`<div class="card"><h3>🔐 Admin Login</h3>${denied?'<p style="color:var(--red)">Is account ko admin access nahi hai.</p>':''}<label>Email</label><input id="em" type="email" autocomplete="username"><label>Password</label><input id="pw" type="password" autocomplete="current-password"><label><input type="checkbox" id="sp"> Show password</label><br><label><input type="checkbox" id="rm" checked> Remember me</label><p id="er" style="color:var(--red)"></p><button id="li">Login</button></div>`;
+el.onclick=async e=>{if(e.target.id==='sp')$('#pw').type=e.target.checked?'text':'password';
+if(e.target.id==='li'){const{error}=await sb.auth.signInWithPassword({email:$('#em').value.trim(),password:$('#pw').value});if(error){$('#er').textContent='Email ya password galat hai';return}localStorage.rem=$('#rm').checked?'1':'0';sessionStorage.alive=1;render()}}}
+const ist=d=>new Date(d).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+const sod=(d=new Date())=>{const x=new Date(d);x.setHours(0,0,0,0);return x};
+const valid=o=>o.order_status!=='cancelled';
+async function dash(el){const w=sod(new Date(Date.now()-6*864e5)).toISOString();
+const[o,pc]=await Promise.all([sb.from('orders').select('id,total,order_status,created_at').gte('created_at',w),sb.from('products').select('stock,low_stock_threshold,is_available')]);
+const O=o.data||[],P=pc.data||[],t0=sod().getTime(),td=O.filter(x=>new Date(x.created_at)>=t0),sales=td.filter(valid).reduce((a,x)=>a+ +x.total,0),pend=O.filter(x=>['new','accepted','packing','out_for_delivery'].includes(x.order_status)).length;
+const low=P.filter(p=>p.stock!=null&&+p.stock<=+p.low_stock_threshold).length;
+const days=[...Array(7)].map((_,i)=>{const d=sod(new Date(Date.now()-(6-i)*864e5));return{l:d.toLocaleDateString('en-IN',{weekday:'short'}),v:O.filter(x=>valid(x)&&sod(x.created_at).getTime()===d.getTime()).reduce((a,x)=>a+ +x.total,0)}}),mx=Math.max(1,...days.map(d=>d.v)),tot7=days.reduce((a,d)=>a+d.v,0),n7=O.filter(valid).length;
+el.innerHTML=`<h3>Namaste, Ravi 👋</h3><div class="stat"><div class="card">Today's Sales<b>${rup(sales)}</b></div><div class="card">Today's Orders<b>${td.length}</b></div><div class="card">Pending<b>${pend}</b></div><div class="card">Delivered Today<b>${td.filter(x=>x.order_status==='delivered').length}</b></div><div class="card">Total Products<b>${P.length}</b></div><div class="card">Low Stock<b>${low}</b></div></div>
+<div class="row"><a class="btn" href="#/admin/products">+ Add Product</a><a class="btn o" href="#/admin/orders">📦 Orders</a><a class="btn o" href="#/admin/sales">📊 Sales</a></div>
+<div class="card" style="margin-top:12px"><b>Last 7 Days</b><div class="mut">Sales ${rup(tot7)} · Orders ${n7} · Avg ${rup(n7?tot7/n7:0)}</div><div class="bars" style="margin:12px 0 22px">${days.map(d=>`<div style="height:${Math.max(2,d.v/mx*100)}%" title="${rup(d.v)}"><span>${d.l}</span></div>`).join('')}</div></div>`}
+
+const STS=[['new','New'],['accepted','Accepted'],['packing','Packing'],['out_for_delivery','Out for Delivery'],['delivered','Delivered'],['cancelled','Cancelled']];
+const NEXT={new:[['accepted','Accept Order',''],['cancelled','Reject Order','rd']],accepted:[['packing','Mark as Packing','']],packing:[['out_for_delivery','Out for Delivery','']],out_for_delivery:[['delivered','Mark as Delivered','']]};
+let OT='new';
+async function aOrders(el){const load=async()=>{const{data}=await sb.from('orders').select('*').order('created_at',{ascending:false}).limit(300);return data||[]};let D=await load(),open=null;
+const draw=()=>{const L=D.filter(o=>o.order_status===OT);el.innerHTML=`<div class="chips">${STS.map(([k,n])=>`<button data-t="${k}" class="${OT===k?'on':''}">${n} (${D.filter(o=>o.order_status===k).length})</button>`).join('')}</div>`+(L.length?L.map(o=>`<div class="card" data-o="${o.id}"><div class="ln"><b>#${esc(o.id)}</b><b>${rup(o.total)}</b></div><div>${esc(o.customer_name)} · <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a></div><div class="mut">${ist(o.created_at)} · ${o.payment_method} · ${o.payment_status}</div><div>${o.items.map(i=>`${esc(i.name_hl)} ×${i.qty}`).join(', ')}</div><div class="mut">${esc(o.delivery_address)} (${o.distance_km} KM)</div>
+${open===o.id?`<div style="margin:8px 0">${o.items.map(i=>`<div class="ln"><span>${esc(i.name_hl)} × ${i.qty}</span><span>${rup(i.amount)}</span></div>`).join('')}<div class="ln"><span>Subtotal</span><span>${rup(o.subtotal)}</span></div><div class="ln"><span>Delivery</span><span>${rup(o.delivery_fee)}</span></div><div class="ln"><span>Discount${o.coupon_code?' ('+esc(o.coupon_code)+')':''}</span><span>−${rup(o.discount)}</span></div><div class="ln tt"><span>Total</span><span>${rup(o.total)}</span></div><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.delivery_address)}" target="_blank" rel="noopener">📍 Google Maps</a><div class="mut" style="margin-top:6px">${STS.map(([k,n])=>(STS.findIndex(x=>x[0]===o.order_status)>=STS.findIndex(x=>x[0]===k)&&k!=='cancelled'?'✔ ':'○ ')+n).join(' → ')}</div></div>`:''}
+<div class="row" style="margin-top:6px"><button class="o" data-x="${o.id}">${open===o.id?'Hide':'Details'}</button>${(NEXT[o.order_status]||[]).map(([s,n,c])=>`<button class="${c}" data-s="${s}" data-id="${o.id}">${n}</button>`).join('')}</div></div>`).join(''):'<div class="card">Koi order nahi</div>')};draw();
+el.onclick=async e=>{const t=e.target.closest('[data-t]'),x=e.target.closest('[data-x]'),s=e.target.closest('[data-s]');
+if(t){OT=t.dataset.t;draw()}else if(x){open=open===x.dataset.x?null:x.dataset.x;draw()}
+else if(s){if(s.dataset.s==='cancelled'&&!confirm('Order reject karein?'))return;const u={order_status:s.dataset.s};if(u.order_status==='delivered')u.payment_status='paid';const{error}=await sb.from('orders').update(u).eq('id',s.dataset.id);if(error)return alert(error.message);D=await load();draw();toast('✔')}};
+window.PT=setInterval(async()=>{if(!/INPUT/.test(document.activeElement.tagName)){const n=await load();if(n.length!==D.length){D=n;draw();toast('🔔 Naya order')}}},30000)}
+
+/* --- products + photo --- */
+let EP=null,PH={blob:null,url:'',rem:false,tmp:null},STREAM=null,PF='all',PQ='';
+const stopCam=()=>{if(STREAM){STREAM.getTracks().forEach(x=>x.stop());STREAM=null}};
+const toBlob=(src,w,h)=>{const k=Math.min(1,800/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(h*k);c.getContext('2d').drawImage(src,0,0,c.width,c.height);return new Promise(r=>c.toBlob(r,'image/jpeg',.82))};
+const IMGH=u=>`<img src="${esc(u)}" alt="" style="width:120px;height:120px;object-fit:cover;border-radius:12px">`;
+function pvDraw(cur){const pv=$('#pv');if(!pv)return;const u=PH.tmp?PH.tmp.url:(PH.rem?'':(PH.url||cur||''));
+pv.innerHTML=PH.tmp?IMGH(u)+'<div class="row"><button class="o" data-ph="retake">Retake</button><button data-ph="use">Use Photo</button></div>':u?IMGH(u)+'<div class="row"><button class="o" data-ph="gal">Replace</button><button class="o" data-ph="rm">Remove</button></div>':''}
+async function openCam(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){$('#fc').click();return}
+const m=$('#cm');m.style.display='flex';$('#cmsg').textContent='';
+try{STREAM=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280}},audio:false});const v=$('#vid');v.srcObject=STREAM;await v.play()}catch(e){stopCam();$('#cmsg').textContent='Camera ki permission nahi mili. Browser/phone settings mein Camera allow karein, ya neeche se Gallery chunein.'}}
+let LASTSRC='gal';
+async function aProducts(el){const[p,c]=await Promise.all([sb.from('products').select('*').order('created_at',{ascending:false}),sb.from('categories').select('*').order('sort')]);let D=p.data||[];const C=c.data||[];
+const UN=['1 kg','500 g','250 g','1 piece','1 guccha','dozen'];
+const draw=()=>{const e=EP?D.find(x=>x.id===EP)||{}:{},cur=e.image_url||'';
+const L=D.filter(x=>(!PQ||(x.name_hi+x.name_hl).toLowerCase().includes(PQ.toLowerCase()))&&(PF==='all'||(PF==='in'&&!outOf(x))||(PF==='out'&&outOf(x))||(PF==='low'&&x.stock!=null&&+x.stock<=+x.low_stock_threshold)||(PF==='feat'&&x.is_featured)));
+const pct=e.discount_price!=null&&e.price?Math.round((1-e.discount_price/e.price)*100):'';
+el.innerHTML=`<div class="card"><b>${EP?'✏️ Edit Product':'➕ Add Product'}</b>
+<label>📷 Product Photo</label><div class="row"><button class="o" data-ph="cam">📷 Camera se photo</button><button class="o" data-ph="gal">🖼 Gallery se chunein</button></div><input id="af" type="file" accept="image/*" hidden><input id="fc" type="file" accept="image/*" capture="environment" hidden><div id="pv" style="margin:8px 0"></div>
+<div id="cm" style="display:none;position:fixed;inset:0;z-index:30;background:#000;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px"><video id="vid" playsinline muted style="max-width:100%;max-height:65%;border-radius:12px"></video><div id="cmsg" style="color:#fff;text-align:center"></div><div class="row" style="width:100%;max-width:420px"><button data-ph="cap">Capture</button><button class="o" data-ph="gal" style="color:#fff!important;border-color:#fff!important">Gallery</button><button class="o" data-ph="close" style="color:#fff!important;border-color:#fff!important">Close</button></div></div>
+<label>🥬 Product Name (जैसे आलू, टमाटर, प्याज़)</label><input id="an" value="${esc(e.name_hi||'')}"><label>Hinglish naam (optional, jaise Aloo)</label><input id="al" value="${esc(e.name_hl&&e.name_hl!==e.name_hi?e.name_hl:'')}">
+<label>🏷️ Category</label><select id="ac">${C.map(x=>`<option value="${x.id}" ${e.category===x.id?'selected':''}>${esc(x.name_hi)} / ${esc(x.name_hl)}</option>`).join('')}</select>
+<div class="row"><div><label>💰 Price ₹</label><input id="ap" type="number" inputmode="decimal" value="${e.price??''}"></div><div><label>Kitne par</label><select id="au">${[['1 kg','₹ / kg'],['500 g','₹ / 500 g'],['250 g','₹ / 250 g'],['1 piece','₹ / piece'],['1 guccha','₹ / guccha'],['dozen','₹ / dozen']].map(([k,n])=>`<option value="${k}" ${e.unit===k?'selected':''}>${n}</option>`).join('')}</select></div></div>
+<label>📦 Stock</label><select id="aa"><option value="1" ${e.is_available===false?'':'selected'}>✅ Available</option><option value="0" ${e.is_available===false?'selected':''}>❌ Out of Stock</option></select>
+<div class="row"><div><label>Quantity (optional, khatam hone par auto band)</label><input id="as" type="number" inputmode="decimal" value="${e.stock??''}"></div><div><label>🔥 Discount % (optional)</label><input id="ad" type="number" inputmode="numeric" min="0" max="90" value="${pct}"></div></div>
+<label>📝 Description (optional)</label><input id="ax" value="${esc(e.description||'')}">
+<div class="row"><button id="sv">✅ ${EP?'Update Product':'Publish Product'}</button>${EP?'<button class="o" id="cx">Cancel</button>':''}</div></div>
+<input id="sq" type="search" placeholder="Search products" value="${esc(PQ)}"><div class="chips">${[['all','All'],['in','In Stock'],['out','Out of Stock'],['low','Low Stock'],['feat','Featured']].map(([k,n])=>`<button data-pf="${k}" class="${PF===k?'on':''}">${n}</button>`).join('')}</div>`+
+L.map(x=>`<div class="card" data-pid="${x.id}"><div class="ln"><b>${x.image_url?`<img src="${esc(x.image_url)}" alt="" style="width:36px;height:36px;object-fit:cover;border-radius:8px;vertical-align:middle">`:x.emoji} ${esc(x.name_hl)}</b><span class="tag ${outOf(x)?'r':x.stock!=null&&+x.stock<=+x.low_stock_threshold?'y':''}">${outOf(x)?'Out of Stock':x.stock!=null&&+x.stock<=+x.low_stock_threshold?'⚠️ Low Stock':'In Stock'}</span></div>
+<div class="row"><div><label>₹ / ${esc(x.unit)}</label><input data-f="price" type="number" value="${x.price}"></div><div><label>Stock</label><div class="qty"><button class="o" data-st="-1">−</button><input data-f="stock" type="number" value="${x.stock??''}" style="margin:0;text-align:center"><button class="o" data-st="1">+</button></div></div></div>
+<div class="row"><button class="o" data-ed>Edit</button><button class="o" data-av>${x.is_available?'Hide':'Show'}</button><button class="rd" data-del>Delete</button></div></div>`).join('');pvDraw(cur)};
+draw();
+const setPhoto=async f=>{PH.tmp={blob:await createImageBitmap(f).then(b=>toBlob(b,b.width,b.height))};PH.tmp.url=URL.createObjectURL(PH.tmp.blob);pvDraw()};
+el.onchange=async e=>{const i=e.target;if((i.id==='af'||i.id==='fc')&&i.files[0]){await setPhoto(i.files[0]);i.value=''}
+else if(i.dataset.f){const id=i.closest('[data-pid]').dataset.pid,v=i.value===''?null:+i.value;const{error}=await sb.from('products').update({[i.dataset.f]:v}).eq('id',id);if(error)return alert(error.message);D.find(x=>x.id===id)[i.dataset.f]=v;toast('✔')}};
+el.oninput=e=>{if(e.target.id==='sq'){PQ=e.target.value;const s=e.target.selectionStart;draw();const q=$('#sq');q.focus();q.setSelectionRange(s,s)}};
+el.onclick=async e=>{const T_=e.target,ph=T_.closest('[data-ph]'),pid=T_.closest('[data-pid]'),id=pid&&pid.dataset.pid;
+if(ph){const a=ph.dataset.ph;
+if(a==='cam'||(a==='retake'&&LASTSRC==='cam')){LASTSRC='cam';PH.tmp=null;openCam()}
+else if(a==='gal'||a==='retake'){LASTSRC='gal';stopCam();$('#cm').style.display='none';PH.tmp=null;$('#af').click()}
+else if(a==='close'){stopCam();$('#cm').style.display='none'}
+else if(a==='cap'){const v=$('#vid');if(!v.videoWidth)return;const b=await toBlob(v,v.videoWidth,v.videoHeight);PH.tmp={blob:b,url:URL.createObjectURL(b)};stopCam();$('#cm').style.display='none';pvDraw()}
+else if(a==='use'){PH.blob=PH.tmp.blob;PH.url=PH.tmp.url;PH.rem=false;PH.tmp=null;pvDraw();toast('✔')}
+else if(a==='rm'){PH.blob=null;PH.url='';PH.rem=true;pvDraw()}
+return}
+const pf=T_.closest('[data-pf]');if(pf){PF=pf.dataset.pf;draw();return}
+if(T_.id==='cx'){EP=null;PH={blob:null,url:'',rem:false,tmp:null};draw()}
+else if(T_.id==='sv'){const v=k=>$('#'+k).value.trim(),price=+v('ap'),dq=+v('ad')||0,dp=dq>0?Math.round(price*(1-dq/100)*100)/100:null,E0=EP?D.find(x=>x.id===EP)||{}:{};
+if(!v('an')||v('ap')===''||!(price>=0)||dq<0||dq>90){alert('Naam aur daam bharein (discount 0–90%)');return}
+T_.disabled=true;try{let url=EP?(PH.rem?null:(D.find(x=>x.id===EP)||{}).image_url||null):null;
+if(PH.blob){const n=crypto.randomUUID()+'.jpg';const u=await sb.storage.from('product-images').upload(n,PH.blob,{contentType:'image/jpeg',cacheControl:'31536000'});if(u.error)throw u.error;url=sb.storage.from('product-images').getPublicUrl(n).data.publicUrl}
+const row={name_hi:v('an'),name_hl:v('al')||v('an'),emoji:E0.emoji||'🥬',category:v('ac'),price,discount_price:dp,unit:v('au'),stock:v('as')===''?null:+v('as'),low_stock_threshold:E0.low_stock_threshold||5,description:v('ax')||null,image_url:url,is_available:v('aa')==='1',is_featured:!!E0.is_featured};
+const r=EP?await sb.from('products').update(row).eq('id',EP):await sb.from('products').insert(row);if(r.error)throw r.error;
+toast(EP?'Product update ho gaya':'Product successfully added.');EP=null;PH={blob:null,url:'',rem:false,tmp:null};await aProducts(el)}catch(x){alert('Save nahi hua: '+(x.message||x));T_.disabled=false}}
+else if(T_.closest('[data-st]')){const x=D.find(z=>z.id===id),n=Math.max(0,(+x.stock||0)+ +T_.closest('[data-st]').dataset.st);const{error}=await sb.from('products').update({stock:n}).eq('id',id);if(error)return alert(error.message);x.stock=n;draw()}
+else if(T_.closest('[data-ed]')){EP=id;PH={blob:null,url:'',rem:false,tmp:null};draw();scrollTo(0,0)}
+else if(T_.closest('[data-av]')){const x=D.find(z=>z.id===id),{error}=await sb.from('products').update({is_available:!x.is_available}).eq('id',id);if(error)return alert(error.message);x.is_available=!x.is_available;draw()}
+else if(T_.closest('[data-del]')&&confirm('Product delete karein?')){const{error}=await sb.from('products').delete().eq('id',id);if(error)return alert(error.message);D=D.filter(z=>z.id!==id);draw()}}}
+
+async function aCust(el){const[c,o]=await Promise.all([sb.from('customers').select('*').order('created_at',{ascending:false}),sb.from('orders').select('*').order('created_at',{ascending:false}).limit(1000)]);const O=o.data||[];let sel=null;
+const draw=()=>{el.innerHTML=sel?`<button class="o" data-b>← Back</button><h3>${esc(sel.name)}</h3><p>${esc(sel.phone)}<br>${esc(sel.address||'')}</p>`+O.filter(x=>x.customer_id===sel.id).map(x=>`<div class="card"><div class="ln"><b>#${x.id}</b><b>${rup(x.total)}</b></div><div class="mut">${ist(x.created_at)} · ${x.order_status}</div><div>${x.items.map(i=>`${esc(i.name_hl)} ×${i.qty}`).join(', ')}</div></div>`).join(''):`<h3>Customers</h3>`+((c.data||[]).map(x=>{const m=O.filter(y=>y.customer_id===x.id),sp=m.filter(valid).reduce((a,y)=>a+ +y.total,0);return `<div class="card" data-c="${x.id}"><div class="ln"><b>${esc(x.name)}</b><span>${esc(x.phone)}</span></div><div class="mut">Orders: ${m.length} · Spent: ${rup(sp)} · Last: ${m[0]?ist(m[0].created_at):'—'}</div></div>`}).join('')||'<div class="card">Abhi koi customer nahi</div>')};draw();
+const CL=c.data||[];el.onclick=e=>{if(e.target.closest('[data-b]')){sel=null;draw();return}const k=e.target.closest('[data-c]');if(k){sel=CL.find(x=>x.id===k.dataset.c);draw()}}}
+
+async function aSales(el){let R='7d',A='',B='';
+const range=()=>{const t=sod();let a,b=new Date(t.getTime()+864e5);if(R==='today')a=t;else if(R==='yday'){a=new Date(t-864e5);b=t}else if(R==='7d')a=new Date(t-6*864e5);else if(R==='month')a=new Date(t.getFullYear(),t.getMonth(),1);else if(R==='lmonth'){a=new Date(t.getFullYear(),t.getMonth()-1,1);b=new Date(t.getFullYear(),t.getMonth(),1)}else{a=A?sod(A):t;b=B?new Date(sod(B).getTime()+864e5):b}return[a,b]};
+const draw=async()=>{const[a,b]=range(),{data}=await sb.from('orders').select('*').gte('created_at',a.toISOString()).lt('created_at',b.toISOString());const O=data||[],V=O.filter(valid),tot=V.reduce((x,o)=>x+ +o.total,0),days=[];
+for(let d=sod(a);d<b&&days.length<62;d=new Date(d.getTime()+864e5)){const k=sod(d).getTime();days.push({l:d.getDate()+'/'+(d.getMonth()+1),v:V.filter(o=>sod(o.created_at).getTime()===k).reduce((x,o)=>x+ +o.total,0)})}
+const mx=Math.max(1,...days.map(d=>d.v)),tp={};V.forEach(o=>o.items.forEach(i=>{tp[i.name_hl]=(tp[i.name_hl]||0)+ +i.amount}));const top=Object.entries(tp).sort((x,y)=>y[1]-x[1]).slice(0,8);
+el.innerHTML=`<h3>Sales Analytics</h3><select id="rg">${[['today','Today'],['yday','Yesterday'],['7d','Last 7 Days'],['month','This Month'],['lmonth','Last Month'],['custom','Custom']].map(([k,n])=>`<option value="${k}" ${R===k?'selected':''}>${n}</option>`).join('')}</select>${R==='custom'?`<div class="row"><input id="da" type="date" value="${A}"><input id="db" type="date" value="${B}"></div>`:''}
+<div class="stat"><div class="card">Total Sales<b>${rup(tot)}</b></div><div class="card">Orders<b>${V.length}</b></div><div class="card">Avg Order<b>${rup(V.length?tot/V.length:0)}</b></div><div class="card">Delivered<b>${O.filter(o=>o.order_status==='delivered').length}</b></div><div class="card">Cancelled<b>${O.filter(o=>!valid(o)).length}</b></div></div>
+<div class="card"><b>Daily Sales</b><div class="bars" style="margin:12px 0 22px">${days.map(d=>`<div style="height:${Math.max(2,d.v/mx*100)}%" title="${rup(d.v)}">${days.length<=14?`<span>${d.l}</span>`:''}</div>`).join('')}</div></div>
+<div class="card"><b>Top Selling Products</b>${top.map(([n,v],i)=>`<div class="ln"><span>${i+1}. ${esc(n)}</span><span>${rup(v)}</span></div>`).join('')||'<div class="mut">Abhi data nahi</div>'}</div>`;
+el.onchange=e=>{if(e.target.id==='rg'){R=e.target.value;draw()}else if(e.target.id==='da'){A=e.target.value;draw()}else if(e.target.id==='db'){B=e.target.value;draw()}}};await draw()}
+
+async function aCoup(el){const draw=async()=>{const{data}=await sb.from('coupons').select('*').order('code');const D=data||[];
+el.innerHTML=`<h3>Coupons & Offers</h3><div class="card"><label>Offer name</label><input id="cn"><label>Coupon code</label><input id="cc" style="text-transform:uppercase"><div class="row"><select id="ct"><option value="fixed">Fixed ₹</option><option value="percentage">Percentage %</option></select><input id="cv" type="number" placeholder="Discount value"></div><div class="row"><input id="cm" type="number" placeholder="Minimum order ₹"><input id="cx" type="number" placeholder="Max discount ₹"></div><div class="row"><div><label>Start</label><input id="cs" type="date"></div><div><label>End</label><input id="ce" type="date"></div></div><button id="cadd">Create Offer</button></div>`+
+D.map(c=>`<div class="card"><div class="ln"><b>${esc(c.code)}</b><span class="tag ${c.is_active?'':'r'}">${c.is_active?'Active':'Inactive'}</span></div><div>${esc(c.name||'')} · ${c.discount_type==='percentage'?c.discount_value+'%':'₹'+c.discount_value+' OFF'} · Min ₹${c.minimum_order||0}${c.maximum_discount?' · Max ₹'+c.maximum_discount:''}</div><div class="row" style="margin-top:6px"><button class="o" data-tg="${c.id}" data-v="${c.is_active}">${c.is_active?'Deactivate':'Activate'}</button><button class="rd" data-dl="${c.id}">Delete</button></div></div>`).join('');
+el.onclick=async e=>{const v=k=>$('#'+k).value.trim();
+if(e.target.id==='cadd'){if(!v('cc')||!(+v('cv')>0))return alert('Code aur discount value bharein');const{error}=await sb.from('coupons').insert({name:v('cn')||null,code:v('cc').toUpperCase(),discount_type:v('ct'),discount_value:+v('cv'),minimum_order:+v('cm')||0,maximum_discount:+v('cx')||null,start_date:v('cs')?new Date(v('cs')).toISOString():null,end_date:v('ce')?new Date(v('ce')+'T23:59:59').toISOString():null});if(error)return alert(error.message);toast('✔');draw()}
+const t=e.target.closest('[data-tg]'),d=e.target.closest('[data-dl]');
+if(t){await sb.from('coupons').update({is_active:t.dataset.v!=='true'}).eq('id',t.dataset.tg);draw()}
+if(d&&confirm('Delete?')){await sb.from('coupons').delete().eq('id',d.dataset.dl);draw()}}};await draw()}
+
+async function aSet(el){const{data}=await sb.from('settings').select('*').eq('id',1).single();const s=data||{};
+const I=(k,l,t='text')=>`<label>${l}</label><input id="s_${k}" type="${t}" value="${esc(s[k]??'')}">`;
+el.innerHTML=`<h3>Shop & Delivery Settings</h3><div class="card"><div class="ln"><b>${s.is_open?'🟢 Shop Open':'🔴 Shop Closed'}</b><button id="so" style="padding:8px 14px">${s.is_open?'Close karein':'Open karein'}</button></div><label><input type="checkbox" id="s_accept" ${s.accept_orders_when_closed?'checked':''}> Closed hone par bhi orders lein</label></div>
+<div class="card"><b>Shop</b>${I('shop_name','Shop name')}${I('address','Address')}${I('phone','Phone')}${I('whatsapp','WhatsApp (91XXXXXXXXXX)')}${I('email','Email','email')}<div class="row"><div>${I('open_time','Opening time','time')}</div><div>${I('close_time','Closing time','time')}</div></div></div>
+<div class="card"><b>Delivery</b>${I('free_radius_km','Free delivery radius (KM)','number')}${I('free_above','Free delivery above ₹ (0 = off)','number')}${I('delivery_charge','Default delivery charge ₹','number')}${I('min_order','Minimum order ₹','number')}${I('max_km','Max delivery distance (KM)','number')}<label>Distance charges (km:₹, jaise 7:20,10:40)</label><input id="s_tiers" value="${esc((s.tiers||[]).map(t=>t.km+':'+t.fee).join(','))}"></div>
+<div class="card"><b>Homepage banner</b>${I('banner_heading','Heading')}${I('banner_desc','Description')}</div><button id="ss">Save Settings</button>
+<div class="card" style="margin-top:12px"><b>Password badlein</b><input id="np" type="password" placeholder="Naya password (min 8)"><button class="o" id="cp">Change Password</button></div>`;
+const save=async x=>{const{error}=await sb.from('settings').update(x).eq('id',1);if(error)return alert(error.message);toast('Saved ✔')};
+el.onclick=async e=>{if(e.target.id==='so'){await save({is_open:!s.is_open});aSet(el)}
+if(e.target.id==='ss'){const g=k=>$('#s_'+k).value.trim(),n=k=>+g(k)||0,tiers=g('tiers').split(',').map(x=>x.split(':').map(Number)).filter(a=>a.length==2&&a[0]>0&&a[1]>=0).map(([km,fee])=>({km,fee}));
+await save({shop_name:g('shop_name'),address:g('address'),phone:g('phone'),whatsapp:g('whatsapp'),email:g('email')||null,open_time:g('open_time'),close_time:g('close_time'),free_radius_km:n('free_radius_km'),free_above:n('free_above'),delivery_charge:n('delivery_charge'),min_order:n('min_order'),max_km:n('max_km'),tiers,banner_heading:g('banner_heading'),banner_desc:g('banner_desc'),accept_orders_when_closed:$('#s_accept').checked})}
+if(e.target.id==='cp'){const p=$('#np').value;if(p.length<8)return alert('Kam se kam 8 akshar');const{error}=await sb.auth.updateUser({password:p});alert(error?error.message:'Password badal gaya')}}}
+
+async function aNot(el){const{data}=await sb.from('notifications').select('*').order('created_at',{ascending:false}).limit(60);
+const ic={new_order:'🔔',low_stock:'⚠️',cancelled:'❌',payment:'💰'};
+el.innerHTML=`<h3>Notifications</h3><button class="o" id="mr" style="margin-bottom:10px">Sab padh liye</button>`+((data||[]).map(n=>`<div class="card" style="${n.is_read?'opacity:.6':''}"><div>${ic[n.type]||'🔔'} ${esc(n.message)}</div><div class="mut">${ist(n.created_at)}</div></div>`).join('')||'<div class="card">Koi notification nahi</div>');
+el.onclick=async e=>{if(e.target.id==='mr'){await sb.from('notifications').update({is_read:true}).eq('is_read',false);S.unread=0;aNot(el);hdr()}}}
+
+loadShop().then(()=>render());
+</script></body></html>
